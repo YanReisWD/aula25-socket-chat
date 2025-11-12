@@ -7,9 +7,15 @@ clients = []
 
 # Função para lidar com as mensagens de um cliente
 def handle_client(client):
+  usr = client.receive(2048).decode('utf-8')
+  username = usr.strip('$')
+  print('Novo usuário: ', username)
   while True:
       try:
           msg = client.recv(2048)
+          src,msg = msg.split('=>')
+          dst,msg = dst.split(':')
+
           broadcast(msg, client)
       except:
           remove_client(client)

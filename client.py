@@ -10,7 +10,7 @@ def main():
 
   try:
       # Tenta se conectar ao servidor na porta 7777
-      client.connect(('localhost', 7777))
+      client.connect(('192.168.10.20', 7777))
   except:
       # Se não conseguir se conectar, exibe uma mensagem e encerra o programa
       return print('\nNão foi possível se conectar ao servidor!\n')
@@ -48,13 +48,15 @@ def receiveMessages(client):
 
 
 def sendMessages(client, username):
+  # Registrando usuário no servidor
+  client.send(f'${username}$'.encode('utf-8'))
   # Loop para enviar mensagens para o servidor
   while True:
       try:
           # Solicita ao usuário inserir uma mensagem
           msg = input('\n')
           # Envia a mensagem formatada com o nome de usuário ao servidor
-          client.send(f'<{username}> {msg}'.encode('utf-8'))
+          client.send(f'<{username}>  {msg}'.encode('utf-8'))
       except:
           # Se houver um erro ao enviar mensagens, encerra a thread
           return
